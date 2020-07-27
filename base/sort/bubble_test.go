@@ -7,7 +7,7 @@ import (
 
 func Test_bubble(t *testing.T) {
 	type args struct {
-		arr []int
+		data []int
 	}
 	tests := []struct {
 		name string
@@ -18,7 +18,7 @@ func Test_bubble(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := bubble(tt.args.arr); !reflect.DeepEqual(got, tt.want) {
+			if got := bubble(tt.args.data); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("bubble() = %v, want %v", got, tt.want)
 			}
 		})
