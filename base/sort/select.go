@@ -6,9 +6,10 @@ func selects(data []int) []int {
 		min := i
 		for j := i + 1; j < len(data); j++ {
 			if data[min] > data[j] {
-				data[min], data[j] = data[j], data[min]
+				min = j
 			}
 		}
+		data[min], data[i] = data[i], data[min]
 	}
 	return data
 }
