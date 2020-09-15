@@ -10,3 +10,14 @@ func insert(data []int) []int {
 	}
 	return data
 }
+
+
+// Insertion sort
+func insertionSort(data []int, a, b int) []int{
+	for i := a + 1; i < b; i++ {
+		for j := i; j > a && data[j]<data[j-1]; j-- {
+			data[j], data[j-1] = data[j-1], data[j]
+		}
+	}
+	return data
+}
