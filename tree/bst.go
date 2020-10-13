@@ -2,7 +2,7 @@ package tree
 
 import "fmt"
 
-// init tree
+// 二叉搜索树
 func NewBst(data int) *bst {
 	return &bst{
 		root: nil,
@@ -29,9 +29,10 @@ func (t *bst) insert(data int) {
 		right:  nil,
 		parent: nil,
 	}
+	// 插左还是插右
 	for currentNode != nil {
 		// 被插入节点的父节点是当前节点
-		if data < currentNode.data { // 左
+		if data < currentNode.data {
 			if currentNode.left == nil {
 				insertNode.parent = currentNode
 				currentNode.left = insertNode
@@ -39,7 +40,7 @@ func (t *bst) insert(data int) {
 			} else {
 				currentNode = currentNode.left
 			}
-		} else { // 右
+		} else {
 			if currentNode.right == nil {
 				insertNode.parent = currentNode
 				currentNode.right = insertNode
@@ -51,7 +52,7 @@ func (t *bst) insert(data int) {
 	}
 }
 
-// delete or update depend on find
+// find is easy
 func (t *bst) find(data int) *node {
 	currentNode := t.root
 	for currentNode != nil {
@@ -67,19 +68,23 @@ func (t *bst) find(data int) *node {
 	return currentNode
 }
 
+// 删除零个孩子和一个孩子的节点都比较简单，删除有两个孩子的节点比较复杂
 func (t *bst) remove(data int) bool {
+	// 先找出要删除的节点
 	delNode := t.find(data)
+	// 删除的为空节点
 	if delNode == nil {
 		fmt.Println("can not find this node")
 		return false
 	}
-	if delNode.left != nil && delNode.right != nil {
-		// two children
-	} else if delNode.left == nil && delNode.right == nil {
-		// no children
+	// 根据要删除的节点有多个孩子执行不用操作
+	if delNode.left == nil && delNode.right == nil {
 		t.removeZeroNode(delNode)
+	} else if delNode.left != nil && delNode.right != nil {
+		// 两个孩子则比较复杂
+
 	} else {
-		// one children
+		t.removeOneNode(delNode)
 	}
 
 	return true
@@ -107,12 +112,12 @@ func (t *bst) removeZeroNode(n *node) {
 
 // delete node has one children
 func (t *bst) removeOneNode(n *node) {
-	// zero or two
+	// 并非只有一个孩子
 	if (n.left == nil && n.right == nil) || (n.left != nil && n.right != nil) {
 		panic("has two or no children")
 	}
 
-	// left or right
+	// 判断该节点的孩子在左还是右
 	var nextNode *node
 	if n.left != nil {
 		nextNode = n.left
@@ -120,7 +125,7 @@ func (t *bst) removeOneNode(n *node) {
 		nextNode = n.right
 	}
 
-	// delNode is root
+	// 删除root节点
 	if n == t.root {
 		t.root = nextNode
 	}
@@ -133,6 +138,3 @@ func (t *bst) removeOneNode(n *node) {
 	}
 
 }
-
-// 前驱节点:以其左孩子为根的子树的最大结点
-// 后继节点:以其右孩子为根的子树的最小结点

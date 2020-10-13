@@ -38,7 +38,6 @@ func postOrderTraverse(n *node) {
 
 // 层序遍历：附带换行打印
 /**
-实现思路：无法用递归实现
 1 将各节点入队
 2 循环执行以下操作，直到队列为空
 	取出队头节点出队，进行访问
@@ -59,22 +58,22 @@ func levelOrderTraverse(n *node) {
 
 	for queue.Len() != 0 {
 
-		// 取出队头
+		// 出队并打印
 		queueHead := queue.Remove(queue.Front())
 		tempNode := queueHead.(*node) // 类型断言
 		fmt.Printf("%v ", tempNode.data)
 		levelLength--
-		// 将队头的左右子节点插入队列
+		// 入队
 		if tempNode.left != nil {
 			queue.PushBack(tempNode.left)
 		}
 		if tempNode.right != nil {
 			queue.PushBack(tempNode.right)
 		}
-		// 前行的元素个数
+		// 更新节点的长度
 		if levelLength == 0 {
 			levelLength = queue.Len()
-			fmt.Println() // 遇到当前行数已经为0，则打印一次换行
+			fmt.Println() // 完成一行了，打个空行
 		}
 	}
 }
